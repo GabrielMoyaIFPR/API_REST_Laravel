@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Models\Product;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ProductRequest;
 use App\Http\Resources\ProductCollection;
 use App\Repository\ProductRepository;
 use Illuminate\Http\Request;
@@ -42,7 +43,7 @@ class ProductController extends Controller
         return new ProductCollection($product->paginate(10));
     }
 
-    public function save(Request $request) 
+    public function save(ProductRequest $request) 
     {
         $data = $request->all();
         $product = $this->product->create($data);
@@ -51,7 +52,7 @@ class ProductController extends Controller
         
     }
 
-    public function update(Request $request) 
+    public function update(ProductRequest $request) 
     {
         $data = $request->all();
         $product = $this->product->find($data['id']);
