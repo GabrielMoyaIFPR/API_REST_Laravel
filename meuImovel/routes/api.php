@@ -17,3 +17,14 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::prefix('v1')->namespace('App\Http\Controllers\Api')->group(function () {
+    Route::prefix('real-states')->group(function () {
+        Route::get('/', 'RealStateController@index')->name('index');
+        Route::get('/{id}', 'RealStateController@show')->name('show');
+        Route::post('/', 'RealStateController@store')->name('store');
+        Route::put('/{id}', 'RealStateController@update')->name('update');
+        Route::patch('/{id}', 'RealStateController@update')->name('update');
+        Route::delete('/{id}', 'RealStateController@destroy')->name('destroy');
+    });
+});
