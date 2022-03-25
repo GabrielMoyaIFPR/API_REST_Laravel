@@ -31,9 +31,13 @@ class RealStateController extends Controller
 
         try{
             $realState = $this->realState->create($data);
+            if(isset($data['categories']) && count($data['categories'])){
+                $realState->categories()->sync($data['categories']);
+            }
             return response()->json($realState, 201);
         }catch(\Exception $e){
-            return response()->json(['error' => $e->getMessage()], 400);
+            $message = new ApiMessages($e->getMessage());
+            return response()->json($message->getMessage(), 400);
         }
     }
 
@@ -60,6 +64,9 @@ class RealStateController extends Controller
 
         try{
             $realState->update($data);
+            if(isset($data['categories']) && count($data['categories'])){
+                $realState->categories()->sync($data['categories']);
+            }
             return response()->json($realState, 200);
         }catch(\Exception $e){
             $message = new ApiMessages($e->getMessage());

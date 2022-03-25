@@ -22,8 +22,12 @@ class RealState extends Model
 
     ];
     protected $table = 'real_state';
+    
     public function user() {
-
         return $this->belongsTo('App\Models\User');
+    }
+    
+    public function categories() {
+        return $this->belongsToMany('App\Models\Category', 'real_state_categories');
     }
 }
