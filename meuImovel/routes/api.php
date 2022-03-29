@@ -24,6 +24,10 @@ Route::prefix('v1')->namespace('App\Http\Controllers\Api')->group(function () {
     Route::get('/logout', 'Auth\LoginJwtController@logout')->name('logout');
     Route::get('/refresh', 'Auth\LoginJwtController@refresh')->name('refresh');
 
+    Route::get('/search', 'RealStateSearchController@index')->name('search');
+    Route::get('/search/{real_state_id}', 'RealStateSearchController@show')->name('search_single');
+
+
     Route::group(['middleware' => ['jwt.auth']], function () {
         Route::prefix('real-states')->group(function () {
             Route::get('/', 'RealStateController@index')->name('index');
