@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class RealState extends Model
 {
     use HasFactory;
+    protected $appends= ['_links'];
+    protected $table = 'real_state';
     protected $fillable = [
         'title',
         'description',
@@ -21,7 +23,26 @@ class RealState extends Model
         'user_id',
 
     ];
-    protected $table = 'real_state';
+
+    public function getLinksAttribute()
+    {
+        return [
+          'href' =>  route('real_state.real-state.show',[ 'realState' => $this->id]),
+           'rel' => 'Imoveis', 
+        ];
+        
+    }
+
+    public function getThumbAtrribute()
+    {
+        $thumb = $this->photos()where('is_thumb',true);
+        
+        if(!$thumb->count()){
+            return null;
+        }
+        return $thumb->first()->photo;
+    }
+    
     
     public function user() {
         return $this->belongsTo('App\Models\User');

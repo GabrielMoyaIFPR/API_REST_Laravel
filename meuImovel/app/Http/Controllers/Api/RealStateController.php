@@ -58,7 +58,7 @@ class RealStateController extends Controller
 
     public function show($id)
     {
-        $realState = auth('api')->user()->real_state()->with('photos')->find($id);
+        $realState = auth('api')->user()->real_state()->with('photos')->find($id)->makeHidden('thumb');
 
         if(!$realState){
             return response()->json(['error' => 'Imóvel não encontrado'], 404);
